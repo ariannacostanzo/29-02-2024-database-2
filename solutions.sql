@@ -110,6 +110,14 @@ GROUP BY `department_id`;
 
 -- 1. Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia
 
+-- ho scelto nome e cognome per non prendere tutto lo studente
+
+SELECT S.`name` AS 'nome studente', S.`surname` AS 'cognome studente', D.`name` AS 'nome corso' 
+FROM `students` AS S
+JOIN `degrees` AS D
+ON S.`degree_id` = D.`id`
+WHERE D.`name` = 'Corso di Laurea in Economia';
+
 
 
 -- 2. Selezionare tutti i Corsi di Laurea del Dipartimento di Neuroscienze
@@ -135,3 +143,4 @@ GROUP BY `department_id`;
 
 -- 7. BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per
 -- superare ciascuno dei suoi esami
+
