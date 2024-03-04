@@ -122,6 +122,13 @@ WHERE D.`name` = 'Corso di Laurea in Economia';
 
 -- 2. Selezionare tutti i Corsi di Laurea del Dipartimento di Neuroscienze
 
+--ho scelto nome e livello per non prendere tutto
+
+SELECT DEG.`name` AS 'nome corso di laurea',  DEG.`level` AS 'livello corso di laurea', DEP.`name` AS 'nome dipartimento'
+FROM `degrees` AS DEG
+JOIN `departments` AS DEP
+ON DEG.`department_id` = DEP.`id`
+WHERE DEP.`name` = 'Dipartimento di Neuroscienze';
 
 
 -- 3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
