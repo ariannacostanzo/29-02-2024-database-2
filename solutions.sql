@@ -1,3 +1,4 @@
+-- Database Client JDBC estensione per sql
 
 --! QUERY SELECT
 -- 1. Selezionare tutti gli studenti nati nel 1990 (160)
@@ -18,6 +19,18 @@ WHERE `cfu` > 10;
 SELECT * 
 FROM `students`
 WHERE YEAR(`date_of_birth`) <= 1994;
+
+-- soluzione migliore: 
+
+SELECT * 
+FROM `students`
+WHERE TIMESTAMPDIFF(YEAR, `date_of_birth`, CURDATE());
+-- gli argomenti sono il primo ..., il secondo la colonna da controllare, al terzo la sottrazione da cosa
+
+SELECT * 
+FROM `students`
+WHERE `date_of_birth` < DATE_SUB(CURDATE(), INTERVAL 30 YEAR);
+
 
 
 -- 4. Selezionare tutti i corsi del primo semestre del primo anno di un qualsiasi corso di
@@ -45,7 +58,7 @@ WHERE `level` = 'magistrale';
 
 -- 7. Da quanti dipartimenti è composta l'università? (12)
 
-SELECT COUNT(*)
+SELECT COUNT(*) AS `num_dipartimenti`
 FROM `departments`;
 
 
@@ -92,3 +105,33 @@ GROUP BY `exam_id`;
 SELECT COUNT(*) AS `total_courses`, `department_id`
 FROM `degrees`
 GROUP BY `department_id`;
+
+--! JOIN
+
+-- 1. Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia
+
+
+
+-- 2. Selezionare tutti i Corsi di Laurea del Dipartimento di Neuroscienze
+
+
+
+-- 3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
+
+
+
+-- 4. Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui sono iscritti e il
+-- relativo dipartimento, in ordine alfabetico per cognome e nome
+
+
+
+-- 5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
+
+
+
+-- 6. Selezionare tutti i docenti che insegnano nel Dipartimento di Matematica (54)
+
+
+
+-- 7. BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per
+-- superare ciascuno dei suoi esami
