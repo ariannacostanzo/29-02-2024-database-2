@@ -158,12 +158,43 @@ ORDER BY S.`surname`, S.`name`;
 
 -- 5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
 
-
+SELECT D.`name` AS 'nome corso di laurea', C.`name` AS 'nome corso', C.`year` AS 'anno del corso', C.`cfu` AS 'crediti del corso', T.`name` AS 'nome insegnante', T.`surname` AS 'cognome insegnante'
+FROM `course_teacher` AS CT
+JOIN `teachers` AS T
+ON CT.`teacher_id` = T.`id`
+JOIN `courses` AS C
+ON CT.`course_id` = C.`id`
+JOIN `degrees` AS D
+ON C.`degree_id` = D.`id`;
 
 -- 6. Selezionare tutti i docenti che insegnano nel Dipartimento di Matematica (54)
 
-
+SELECT DISTINCT T.`id`, T.`surname` AS 'cognome professore', T.`name` AS 'nome professore', DEP.`name` AS 'nome dipartimento'
+FROM `course_teacher` AS CT
+JOIN `teachers` AS T
+ON CT.`teacher_id` = T.`id`
+JOIN `courses` AS C
+ON CT.`course_id` = C.`id`
+JOIN `degrees` AS DEG
+ON C.`degree_id` = DEG.`id`
+JOIN `departments` AS DEP
+ON DEG.`department_id` = DEP.`id`
+WHERE DEP.`name` = 'Dipartimento di Matematica'
+ORDER BY T.`surname`, T.`name`;
 
 -- 7. BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per
 -- superare ciascuno dei suoi esami
 
+SELECT S.`surname` AS 'cognome studente' , S.`name` AS 'nome studente', ES.`vote` AS 'voto', C.`name` AS 'nome materia', E.`date` AS 'data esame'
+FROM `exam_student` AS ES
+JOIN `students` AS S
+ON ES.`student_id` = S.`id`
+JOIN `exams` AS E
+ON ES.`exam_id` = E.`id`
+JOIN `courses` AS C
+ON E.`course_id` = C.`id`
+ORDER BY S.`surname`, S.`name`, C.`name`, E.`date`;
+
+--in questo modo mostro una tabella con cognome studente, nome studente, voto, nome materia e la data esame. 
+--Ordinati per cognome e nome studente nonchè nome materia e data in modo che si possa vedere uno sotto l'altro i tentativi dell'esame di una stessa materia in base alla data
+--anche se spesso nei risultati gli studenti non faranno mai un punteggio positivo (cioè non passano il corso)
